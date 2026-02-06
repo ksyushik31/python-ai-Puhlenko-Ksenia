@@ -1,0 +1,11 @@
+# Национальные парки: площадь, страна, дата основания, самая высокая точка, высота над уровнем моря
+SELECT DISTINCT ?park ?parkLabel ?country ?countryLabel ?area ?inception ?highestPoint ?highestPointLabel ?elevation WHERE {
+  ?park wdt:P31 wd:Q46169;  # Национальный парк
+           wdt:P17 ?country;  # Страна
+           wdt:P2046 ?area;   # Площадь
+           wdt:P571 ?inception; # Дата основания
+           wdt:P610 ?highestPoint; # Самая высокая точка
+           wdt:P2044 ?elevation. # Высота над уровнем моря
+
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],ru". }
+}
