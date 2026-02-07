@@ -1,3 +1,4 @@
+# Национальные парки: основные данные (площадь, страна, дата основания, самая высокая точка, высота над уровнем моря)
 SELECT DISTINCT ?park ?parkLabel ?country ?countryLabel ?area ?inception ?highestPoint ?highestPointLabel ?elevation WHERE {
   ?park wdt:P31 wd:Q46169;  # Национальный парк
            wdt:P17 ?country;  # Страна
@@ -7,5 +8,6 @@ SELECT DISTINCT ?park ?parkLabel ?country ?countryLabel ?area ?inception ?highes
   OPTIONAL { ?park wdt:P610 ?highestPoint. } # Самая высокая точка (опционально)
   OPTIONAL { ?park wdt:P2044 ?elevation. }   # Высота над уровнем моря (опционально)
 
-  SERVICE wikibase:label { bd:serviceParam wikibase:language "ru, en" }
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "ru, en". }
 }
+LIMIT 1000  # Ограничение на 1000 записей
