@@ -1,0 +1,19 @@
+# Национальные парки: название, страна, континент, площадь (км²), год основания, высота, координаты
+# National parks: name, country, continent, area (km²), inception year, elevation, coordinates
+SELECT ?park ?parkLabel ?countryLabel ?continentLabel ?areaKm2 ?inceptionYear ?elevation ?coord
+WHERE {
+  ?park wdt:P31 wd:Q46169 ;        # национальный парк
+        wdt:P17 ?country ;          # страна
+        p:P2046 ?areaStmt .         # заявление о площади
+  ?areaStmt psn:P2046 ?areaNorm .   # нормализованное значение (СИ)
+  ?areaNorm wikibase:quantityAmount ?areaSI .  # значение в м²
+  BIND(?areaSI / 1000000 AS ?areaKm2)          # перевод в км²
+  OPTIONAL { ?country wdt:P30 ?continent . }   # континент через страну
+  OPTIONAL {
+    ?park wdt:P571 ?inception .
+    BIND(YEAR(?inception) AS ?inceptionYear)   # только год
+  }
+  OPTIONAL { ?park wdt:P2044 ?elevation . }    # высота над у.м. (м)
+  OPTIONAL { ?park wdt:P625 ?coord . }         # координаты
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "ru,en,mul" }
+}
