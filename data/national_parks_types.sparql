@@ -1,0 +1,9 @@
+# Национальные парки: все типы объекта (P31), кроме самого Q46169
+# National parks: all instance types (P31) except Q46169 itself
+SELECT ?park ?parkLabel ?instanceType ?instanceTypeLabel
+WHERE {
+  ?park wdt:P31 wd:Q46169 .      # национальный парк
+  ?park wdt:P31 ?instanceType .  # все типы объекта
+  FILTER(?instanceType != wd:Q46169)  # исключаем Q46169 — он и так известен
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "ru,en,mul" }
+}
