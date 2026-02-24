@@ -1,0 +1,13 @@
+# Национальные парки: подписчики в соцсетях с указанием года
+# National parks: social media followers with point in time
+SELECT ?park ?parkLabel ?followers ?year
+WHERE {
+  ?park wdt:P31 wd:Q46169 .      # национальный парк
+  ?park p:P8687 ?stmt .           # утверждение: подписчики в соцсетях
+  ?stmt ps:P8687 ?followers .     # значение
+  OPTIONAL {
+    ?stmt pq:P585 ?date .
+    BIND(YEAR(?date) AS ?year)    # год измерения
+  }
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "ru,en,mul" }
+}
