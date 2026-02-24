@@ -1,0 +1,13 @@
+# Национальные парки: число посетителей в год (временной ряд)
+# National parks: visitors per year (time series)
+SELECT ?park ?parkLabel ?visitors ?year
+WHERE {
+  ?park wdt:P31 wd:Q46169 .      # национальный парк
+  ?park p:P1174 ?stmt .            # утверждение: посетители в год
+  ?stmt ps:P1174 ?visitors .      # значение
+  OPTIONAL {
+    ?stmt pq:P585 ?date .
+    BIND(YEAR(?date) AS ?year)    # год измерения
+  }
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "ru,en,mul" }
+}
